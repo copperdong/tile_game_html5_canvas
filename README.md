@@ -3,13 +3,17 @@ tile_game_html5_canvas
 
 Experimental code for tiled rpg on HTML5 canvas.
 
-There's nian cat, a seller, talking cubes and you can activate some violence in the code by enabling
+Meet nian cat, a useless trader, talking cubes and you can activate some violence in the code by enabling
 the insects and shoot on them.
 
-![ScreenShot](https://raw.github.com/i-schuetz/tile_game_html5_canvas/master/game_img.png)
+![ScreenShot](https://raw.github.com/i-schuetz/tile_game_html5_canvas/master/game_img.jpg)
 
 
 This is an unfinished exercise, meant to be taken "as is". Modify and use whereever you want.
+
+[Test it](http://ivanschuetz.com/game/)
+
+Don't remember in which browser there are problems, if you see problems, try with another browser :D
 
 
 Licensed under the Apache License, Version 2.0 (the "License");
