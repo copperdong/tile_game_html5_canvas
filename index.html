@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Isometric game!</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script src="js/jquery-1.7.1.min.js"></script>
+<!-- <script src="js/main.js"></script>-->
+<script src="js/browserdetect.js"></script>
+<script src="js/simple1.js"></script>
+
+<script src="js/particles/jquery.min.js"></script>
+<script src="js/particles/ui.js"></script>
+<script src="js/particles/reflections.js"></script>
+<script src="js/particles/demo_particles.js"></script>
+
+</head>
+<body onload="init();">
+	<div>
+	<div id="canvasCont" style="float:left;"><canvas id="canvas" style="border:none;" width="700" height="500"></canvas></div>
+	
+	<div style="float:left;"><img src="img/small/level_label.png"</div><br/><br/>
+	<div id="stats">
+	<table>
+		<tr>
+			<td>&nbsp;Vitality:&nbsp;</td>
+			<td id="thermometer"><div id="vit" class="mercury"></div></td>
+		</tr>
+		<tr>
+			<td >&nbsp;Strength:&nbsp;</td>
+			<td id="thermometer"><div id="str" class="mercury"></div></td>
+		</tr>
+		<tr>
+			<td>&nbsp;Agility:&nbsp;</td>
+			<td id="thermometer"><div id="agi" class="mercury"></div></td>
+		</tr>
+		<tr>
+			<td>&nbsp;Wisdom:&nbsp;</td>
+			<td id="thermometer"><div id="wis" class="mercury"></div></td>
+		</tr>
+		<tr>
+			<td>&nbsp;Chance:&nbsp;</td>
+			<td id="thermometer"><div id="cha" class="mercury"></div></td>
+		</tr>
+	</table>
+	</div>
+	<br/>
+	<div id="fastAccess">
+		<div><img id="walk" src="img/small/walk_s.png"/></div>
+		<div><img id="gun" src="img/small/gun.png"/></div>
+	</div>	
+	
+	<br/><br/>
+	<div id="minimap">
+	<div class="label">Minimap</div>
+	<div id="wrapper"></div></div>
+	<div class="clear"></div>
+	</div>	<div class="clear"></div>
+	<p>	There are 9 zones in the map. Navigate clicking on the borders of the current zone. Some browsers will not display elements. Best viewed with a recent version of Chrome.</p>
+
+	<!-- ------------------------------------------------------------------------------------------------------ -->
+	<div id="inventory" draggable="true"></div>
+    <div id="about" draggable="true">
+    	<div class="label" style="background-color:#ffffff">Click canvas to interact</div>
+    	<canvas id="glcanvas" width="512" height="512"></canvas> 
+    	<!--  <iframe data-delayedsrc="webgl_particles.html"></iframe>-->
+    </div>
+    <div id="clothes">
+		<div id="clothes_on">
+			<img id="clothes_img" src="img/small/player_inventory.png" />		
+	    	<div id="clothes_selection">
+		    	<img id="helmet" src="img/small/plac_helmet.png" />
+		    	<img id="body" src="img/small/plac_body.png" />
+		    	<img id="arms" src="img/small/plac_arms.png" />
+		    	<img id="hands" src="img/small/plac_hands.png" />
+		    	<img id="weap" src="img/small/plac_weap.png" />
+		    	<img id="shield" src="img/small/plac_shield.png" />
+		    	<img id="pant" src="img/small/plac_pants.png" />
+		    	<img id="boots" src="img/small/plac_boots.png" />
+	    	</div>
+		</div>
+		<div id="right_side">
+			<div id="clothes_selection_right">
+		    	<img id="helmet1" src="img/small/helmet1.png" draggable="true"/>
+		    	<img id="body1" src="img/small/body1.png" draggable="true"/>
+		    	<img id="weap1" src="img/small/weap1.png" draggable="true"/>
+	    	</div>
+		</div>
+		<div style="clear:both"></div>
+	</div>
+	<div style="clear:both"></div><br/>
+	<!-- ------------------------------------------------------------------------------------------------------ -->
+</body>
+</html>
