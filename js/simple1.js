@@ -20,7 +20,6 @@ var borderRight = width - borderSize;
 var borderBottom = height - borderSize - MENU_HEIGHT;
 
 var ctx;
-//var stage;
 
 var player;
 var fruits = [];
@@ -108,33 +107,20 @@ function init() {
 	initMap();
 	initMinimap();
 	
-	//TODO correct here?
 	initNpcs();
 	
 	initScene();
 	initAssets();
 	
-	///should be on demand/////////////
 	initAbout();
 	initClothes();
 	initInventory();
-	///////////////////////////////////
 	
 	initMenu();
 	$("#canvas").click(onClick);
 	$("#canvas").mousemove(onMouseMove);
-//	$("#canvas").keydown(function(e){
-//		e.preventDefault();
-//		switch(e.keyCode) {
-//		case 37: player.move(LEFT); break;
-//		case 38: player.move(UP); break;
-//		case 39: player.move(RIGHT); break;
-//		case 40: player.move(DOWN); break;
-//		}
-//	});
 
-	//FIXME
-//	$("#fastAccess img").click(onFastAccessClick);
+
 	$("#walk").click(function() {
 		onFastAccessClick("walk");
 	});
@@ -142,20 +128,15 @@ function init() {
 		onFastAccessClick("gun");
 	});
 	
-	//	document.addEventListener('onmousemove', onMouseMove, false);
 	document.body.addEventListener('dragover', dragOver, false); 
 	document.body.addEventListener('drop', drop, false); 
 	
 	initEnemies();
 	
-//	setInterval(fruit, 1000);
 	setInterval(render, 1000 / 50);
-	
-	
 }
 
 
-//FIXME
 function onFastAccessClick(clickedItem) {
 	if (clickedItem === "walk" && currentAction != "walk") {
 		currentAction = "walk";
@@ -170,7 +151,6 @@ function onFastAccessClick(clickedItem) {
 
 function initScene() {
 	var canvas = document.getElementById('canvas');
-//	stage = new Stage(canvas);
 	ctx = canvas.getContext('2d');
 }
 
@@ -233,14 +213,13 @@ function render() {
 	}
 	
 	for (var i = 0; i < fruits.length; i++) {
-//	for each (fruit in fruits) {
+
 		var rect = fruits[i].getRect();
 		if (collides(player.getRect(), rect)) {
 			player.interact(fruits[i]);
-//			fruits.splice(i, 1);
+
 			
 			//TODO event handling for this like mouse over / mouse out
-//			console.log("CHECKING FRUIT TYPE:" + fruit.type);
 			if (fruits[i].type === "button") {
 				fruits[i].setState("pressed");
 			}
@@ -257,9 +236,7 @@ function render() {
 	///////////////////////////////////////////////////////////////////////////////////////
 
 	ctx.drawImage(currentTile.bgImg, 0, 0);
-//	clear();
-	
-//	drawTile(TILE_W, TILE_H, 0, 0);
+
 	drawTiles();
 	
 	for (var i in fruits) {
@@ -282,7 +259,7 @@ function render() {
 	for (var i in textOverlays) {
 		textOverlays[i].draw();
 	}
-	//overlays: menu, inventory, panels, etc.
+
 	for (var i in hud) {
 		hud[i].draw();
 	}
@@ -298,8 +275,6 @@ function fruit() {
 function onClick(e) {
 	var x = e.layerX;
 	var y = e.layerY;
-		
-//	getTileAt2(x, y);
 
 	
 	//traverse all objects and check where we clicked
@@ -329,7 +304,6 @@ function onClick(e) {
 			}
 		}
 		
-		//TODO arrow must not be displayed outide of canvas 
 		if (x < width && y < height) {
 			if (lastArrowSet === 4) {
 				if (currentAction === "walk") {
@@ -343,7 +317,6 @@ function onClick(e) {
 			} else {
 				if (currentAction === "walk") {
 					player.walkTo(x, y, changeToTile, [lastArrowSet]);
-//				changeToTile(lastArrowSet);
 				}
 			}
 		}
@@ -374,8 +347,7 @@ function drawTiles() {
 
 //topleft x, topleft y
 function drawTileOld(w, h, tlx, tly) {
-//  Draw a red diamond that spans the entire canvas.
-	ctx.fillStyle = '#'+ Math.floor(Math.random()*16777215).toString(16);
+	ctx.fillStyle = '#'+ Math.floor(Math.random() * 16777215).toString(16);
 	ctx.beginPath();
 	ctx.moveTo(tlx + w / 2, tly);
 	ctx.lineTo(tlx, tly + h / 2);
@@ -391,7 +363,6 @@ function drawTile(tile) {
 	var w = TILE_W;
 	var h = TILE_H;
 	
-//  Draw a red diamond that spans the entire canvas.
 	ctx.fillStyle = tile.color;
 	ctx.beginPath();
 	ctx.moveTo(tlx + w / 2, tly);
@@ -402,61 +373,12 @@ function drawTile(tile) {
 	ctx.fill();
 }
 
-function getTileAt2(pageX, pageY) {
-	console.log("CLICKEd: x:" + pageX + " y:" + pageY);
-	
-	var x = Math.floor(((TILE_W * pageY) + (TILE_H * pageX)) / (TILE_W * TILE_H));
-	
-	//((TILE_W * pageY) + (TILE_H * pageX)) = x * (TILE_W * TILE_H)
-	//(TILE_H * pageX) =  x * (TILE_W * TILE_H) - (TILE_W * pageY)
-	//pageX = (x * (TILE_W * TILE_H) - (TILE_W * pageY)) / TILE_H
-	
-	var y = Math.floor(((TILE_W * pageY) - (TILE_H * pageX)) / (TILE_W * TILE_H));
-	//((TILE_W * pageY) - (TILE_H * pageX)) = x * (TILE_W * TILE_H)
-	//(TILE_H * pageY) =  x * (TILE_W * TILE_H) + (TILE_W * pageX)
-	//pageY = (x * (TILE_W * TILE_H) + (TILE_W * pageX)) / TILE_H
-	
-	console.log("#### getTileAt2: x:" + x + " y: " + y);
-	return {x:x, y:y};
-}
-
 function getPointToMove(pageX, pageY) {
-	console.log("getpointtomove pagex:" + pageX + " pageY:" + pageY);
+	//console.log("getpointtomove pagex:" + pageX + " pageY:" + pageY);
 	var tile = getTileAt3(pageX, pageY);
-	//var x = tile.x * TILE_W + (TILE_W / 2);
-//	var x = ((tile.x * (TILE_W * TILE_H) - (TILE_W * pageY)) / TILE_H) + (TILE_W / 2);
-//	
-////	var y = tile.y * TILE_H + (TILE_H / 2);
-//	var y = ((tile.y * (TILE_W * TILE_H) + (TILE_W * pageX)) / TILE_H) + (TILE_H / 2);
-	
-	console.log("###coords of tile sx:" +tile.x + "sy:" + tile.y);
+
+	//console.log("###coords of tile sx:" +tile.x + "sy:" + tile.y);
 	return {x:tile.x, y:tile.y};
-}
-
-function getTileAt(pageX, pageY) {
-	//adjustment will be 4*tileWidth in your example.
-	var x = pageX - TILE_W;
-
-	//Y*2 -> squares instead of diamonds => 90° = PI/2
-	//easyer calculations!
-	var y = pageY * 2;
-
-	//distance from origin to point in ISO
-	var r = Math.sqrt((x*x) + (y*y));
-	var theta = Math.atan2(x, y);
-	var angle = (Math.PI/4) - theta;
-
-	//length of the side of one tile (128/64 are mine)
-	var rr = Math.sqrt(2*64*64);
-
-	//’real x’ is the projection of screen distance by the angles cos
-	var rx = Math.floor(r* Math.cos(angle) / rr);
-
-	//’real x’ is the projection of screen distance by the angles sin
-	var ry = Math.floor(r* Math.sin(angle) / rr);
-
-	console.log("#### THE TILE: x:" + rx + " y:" + ry);
-	return {x:rx, y:ry};
 }
 
 function getTileAt3(pageX, pageY) {
@@ -537,7 +459,7 @@ function getTileAt3(pageX, pageY) {
 	}
 	sy = offsety + (y * TILE_H) + TILE_H / 2 - player.image.height;
 
-	console.log("#####GET TILE >>>> x:" + x + "y:" + y);
+	//console.log("#####GET TILE >>>> x:" + x + "y:" + y);
 	return {x:sx, y:sy};
 }
 
@@ -630,7 +552,7 @@ function changeToTile(direction) {
 			videos[i].remove();
 		}
 		/////////////////////////////////////////////////////////
-		//hacks TODO remove / generic solution
+		//TODO
 		if (newx === 101 && newy === 100) {
 			addTalkingCube(100, 100);
 			addTalkingCube(50, 300);
@@ -648,7 +570,7 @@ function onMouseMove(e) {
 		var x = e.pageX;
 		var y = e.pageY;
 		var cursor;
-	//	var lastArrowSet;
+
 		var change = false;
 		if (x < borderSize && y < worldHeight) {
 			if (lastArrowSet != 0) {
@@ -739,7 +661,7 @@ function Player() {
 	this.x = 0;
 	this.y = 0;
 	this.vel = 20;
-//	this.rect = new Rect(this.x, this.y, this.image.width, this.image.height);
+
 	this.rect;
 	
 	this.weapons = [];
@@ -747,11 +669,10 @@ function Player() {
 	
 	this.clothes = [];
 	
-	//TODO implement as stack or more suitable data structure//////////
 	this.currentPath;
 	this.currentPathLength;
 	this.currentPathIndex;
-	///////////////////////////////////////////////////////////////////
+
 	this.onTargetReached;
 	this.onTargetReachedArgs;
 	
@@ -780,14 +701,12 @@ function Player() {
 	this.draw = function() {
 		try {
             ctx.drawImage(this.image, this.x, this.y);
-			//cutting source image and pasting it into destination one, drawImage(Image Object, source X, source Y, source Width, source Height, destination X (X position), destination Y (Y position), Destination width, Destination height)
-            //draw stats
-            for (var i in clothes) {
-            	
-            }
+
+            //for (var i in clothes) {	
+            //}
             $('#mercury').width(Math.min(300, this.vitC));
 		} catch (e) {
-			alert('exc:' + e);
+			console.log('exc:' + e);
 		}
 	};
 	
@@ -819,7 +738,7 @@ function Player() {
 	}
 	
 	this.getRect = function() {
-		//TODO not create new object!
+		//TODO don't instantiate each time
 		return new Rect(this.x, this.y, this.image.width, this.image.height);
 	};
 	
@@ -844,9 +763,9 @@ function Player() {
 				drawInventoryText(item.name + ": +1 -> Inventory", item.getRect(), "#000000");
 				inventory.addItem(item, 1);
 				item.state = "picked";
-			} else {
+				
+			} else { //consumed
 				console.log("consumed:" + item.name);
-				//consumed item (maybe better delete directly?)
 				item.state = "picked";
 			}
 		}
@@ -865,7 +784,6 @@ function Player() {
 	this.canConsume = function(element) {
 		//assumes element === stat
 		return this.stats.hasOwnProperty(element);
-//		return contains(this.stats, element);
 	}
 	
 	this.walkTo = function(x, y, onTargetReached, onTargetReachedArgs) {
@@ -876,7 +794,6 @@ function Player() {
 		this.onTargetReachedArgs = onTargetReachedArgs;
 	}
 	
-	//FIXME method
 	this.shoot = function(x, y) {
 		this.weapons[this.currentWeapon].shoot(this.x, this.y, x, y);
 	}
@@ -897,9 +814,8 @@ function Item(name, img) {
 	this.draw = function() {
 		try {
             ctx.drawImage(this.realImage, this.x, this.y);
-			//cutting source image and pasting it into destination one, drawImage(Image Object, source X, source Y, source Width, source Height, destination X (X position), destination Y (Y position), Destination width, Destination height)
 		} catch (e) {
-			alert('exc:' + e);
+			console.log('exc:' + e);
 		}
 	};
 	
@@ -913,12 +829,11 @@ function Item(name, img) {
 	};
 }
 
-//TODO rename fruit -> consumable, consumable extends item
+//TODO inheritance fruit -> consumable -> item
 //position property of consumable ? after collected?
 function Fruit(name, x, y, img, points, index, itemStates) {
 	this.name = name;
-	///////////////////////////////////////////////////
-	//TODO typesystem
+
 	this.type = name === "button" ? "button" : "consumable"; 
 	this.state = "consumable";
 	this.elements = {};
@@ -958,7 +873,7 @@ function Fruit(name, x, y, img, points, index, itemStates) {
 		case "cap":
 			this.elements = {cap:1};
 	}
-	///////////////////////////////////////////////////
+
 	this.invImage = new Image();
 	this.invImage.src = IMG_DIR + img;
 	this.realImage = new Image();
@@ -967,7 +882,7 @@ function Fruit(name, x, y, img, points, index, itemStates) {
 	this.x = x;
 	this.y = y;
 	this.rect;
-//	this.rect = new Rect(this.x, this.y, this.image.width, this.image.height);
+
 	
 	this.setPosition = function(x, y) {
 		this.x = x;
@@ -977,30 +892,15 @@ function Fruit(name, x, y, img, points, index, itemStates) {
 	this.draw = function() {
 		try {
             ctx.drawImage(this.realImage, this.x, this.y);
-			//cutting source image and pasting it into destination one, drawImage(Image Object, source X, source Y, source Width, source Height, destination X (X position), destination Y (Y position), Destination width, Destination height)
 		} catch (e) {
-			alert('exc:' + e);
+			console.log('exc:' + e);
 		}
 	};
 	
 	this.getRect = function() {
-		//TODO not create new object!
+		//TODO not instantiate
 		return new Rect(this.x, this.y, this.realImage.width, this.realImage.height);
 	};
-	
-//	this.beConsumed = function(consumer) {
-//		if (this.state !== "picked") {
-//			for (var element in this.elements) {
-//				//assumes element === stat
-//				if (consumer.canConsume(element)) {
-//					drawItemText(this.getConsumedText(element), this.getRect(), statColors[element]);
-//					consumer.incrementStat(element, this.elements[element]);
-//				}
-//			}
-//			//assumes can be consumed only one time
-//			this.state = "picked";
-//		}
-//	};
 	
 	this.getConsumedText = function(element) {
 		return this.name + ": +" + this.elements[element] + " " + element;
@@ -1017,8 +917,7 @@ function Fruit(name, x, y, img, points, index, itemStates) {
 	
 //	this.goToNextState = function() {
 //		currentState++;
-//		if () {
-//			
+//		if () {			
 //		}
 //	}
 	
@@ -1094,24 +993,16 @@ function Menu() {
 	}
 	
 	this.getRect = function() {
-		//TODO not create new object!
+		//TODO not instantiate
 		return new Rect(this.x, this.y, width, height);
 	};
-	
-//	this.addEventListener = function(eventName, listenerFunction) {
-//		if (!this.eventListeners[eventName]) {
-//			this.eventListeners[eventName] = [];
-//		}
-//		console.log(this.eventListeners[eventName]);
-//		this.eventListeners[eventName].push(listenerFunction);
-//	};
 	
 	this.handleEvent = function(eventName, par) {
 		switch (eventName) {
 			case "click": 
 				//do menu checks
 				//forward to children
-				//REVIEW strange system, investigate about generic display lists and event forwarding
+				//TODO view hierarchy
 				for (var i in this.items) {
 					if (isInSquare(par.x, par.y, this.items[i].getRect())) {
 						//asummes only one item at position
@@ -1132,10 +1023,10 @@ function MenuItem(imgSrc, x, y) {
 	this.x = x;
 	this.y = y;
 	
-	//TODO this depends of this.state - how to encapsulate in safe way?
+	//TODO this depends on this.state - best way to encapsulate?
 	//states: range available. menuitems can have different ranges
 	//default action map for default states.
-	//TODO set map from outside.
+	//TODO setter for stateActions object
 	this.stateActions = {i:this.onInitial, e:this.onEnabled, d:this.onDisabled};
 	
 	this.eventListeners = {state:this.onSetState};
@@ -1164,12 +1055,6 @@ function MenuItem(imgSrc, x, y) {
 		this.state = state;
 		this.handleEvent("state", state);
 	}
-	
-//	this.handleEvent = function(eventName, par) {
-//		switch (eventName) {
-//			case "state": onSetState(par); break;
-//		}
-//	}
 	
 	this.onSetState = function(state) {
 		if (stateActions[state]) {
@@ -1217,7 +1102,7 @@ function MenuItem(imgSrc, x, y) {
 //	}
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//inventory functions
+//inventory
 //TODO generic
 
 function initMenuItems() {
@@ -1322,7 +1207,7 @@ function Rect(x, y, width, height) {
 function About() {
 	this.closeCallback;
 	this.x = (width - 512) / 2;
-	this.y = 5; //TODO height - menu.height
+	this.y = 5;
 	
 	this.setCloseCallback = function(closeCallback) {
 		this.closeCallback = closeCallback;
@@ -1350,7 +1235,7 @@ function Inventory() {
 	this.x = (width - INV_WIDTH) / 2;
 	this.y = (height - INV_HEIGHT) / 2; //TODO height - menu.height
 	
-	//TODO ordered hash map////
+	//TODO ordered "map"////
 	this.model = [];
 	this.itemCount = {};
 	//////////////////////////
@@ -1393,7 +1278,7 @@ function Inventory() {
 		var inventoryDiv = $("#inventory");
 		if (this.updateView) {
 			
-			inventoryDiv.empty(); //FIX not efficient
+			inventoryDiv.empty(); //TODO efficient?
 			inventoryDiv.css("left", this.x).css("top", this.y).css("width", INV_WIDTH).css("height", INV_HEIGHT);
 			
 			//make inventory visible
@@ -1453,23 +1338,19 @@ function Inventory() {
 	this.close = function() {
 		var inventoryDiv = $("#inventory");
 		inventoryDiv.hide();
-//		for (var i = 0; i < hud.length; i++) {
-//			if (hud[i] === this) {
-//				hud.splice(i, 1);
-//			}
-//		}
+
 		if (this.closeCallback) {
 			this.closeCallback();
 		}
 	}
 	
 	this.getRect = function() {
-		//TODO don't create new object!
+		//TODO not instantiate
 		return new Rect(this.x, this.y, INV_WIDTH, INV_HEIGHT);
 	};
 	
 	this.addItem = function(item, count) {
-		if (!contains(this.model, item)) { //quickfix for now only name
+		if (!contains(this.model, item)) { //for now only name
 			this.model.push(item);
 			this.itemCount[item.hashCode()] = count;
 		} else {
@@ -1494,7 +1375,7 @@ function Entity() {
 	}
 }
 
-/////////////////////////////framework OO//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////OO//////////////////////////////////////////////////////////////////////////////
 if (typeof Object.create !== 'function') {
     Object.create = function (o) {
         function F() {}
@@ -1724,7 +1605,6 @@ function initNpcs() {
 	}
 }
 
-//populate with tiles from server instead
 function initTiles() {
 	tiles[99] = [];
 	tiles[100] = [];
@@ -1819,11 +1699,6 @@ function initMinimap() {
 	}
 
 	selectCurrentMiniTile(100, 100);
-	//scrollable, later: drag & drop move
-	
-	//draw currentposition in tile
-	
-	//center around certain tile?
 }
 
 function initMinimapTiles() {
@@ -1867,11 +1742,11 @@ function Enemy(x, y, imgName) {
 	this.vel = 1;
 
 	this.live = 3;
-	//TODO implement as stack or more suitable data structure//////////
+
 	this.currentPath;
 	this.currentPathLength;
 	this.currentPathIndex;
-	///////////////////////////////////////////////////////////////////
+
 	this.onTargetReached;
 	this.onTargetReachedArgs;
 	
@@ -1888,28 +1763,19 @@ function Enemy(x, y, imgName) {
 	this.move = function() {
 		if (this.currentPath) {
 			if (this.currentPathIndex < this.currentPathLength) {
-//				console.log("and we are not finished with it: currentPathIndex:" + this.currentPathIndex + " currentPathlength:" + this.currentPathLength);
 				var pointToMove = this.currentPath[this.currentPathIndex];
 				this.x = pointToMove.x;
 				this.y = pointToMove.y;
 				this.currentPathIndex++;
 			} else {
-//				if (this.onTargetReached) {
-//					console.log("calling onTargetReached:" + this.onTargetReached);
-					//FIXME refactor with Player
-					delete this.currentPath;
-					
-					//FIXME scope why this doesn't work - this.walkToRandomTarget in walkToRandomTarget is undefined
-//					this.onTargetReached.apply(this, this.onTargetReachedArgs);
-					this.walkToRandomTarget();
-					this.currentTargetx = Math.random() * width;
-					this.currentTargety = Math.random() * worldHeight;
-//					console.log("#######################that:" + that + " calling walkTo, walkToRandomTarget is:" + this.walkToRandomTarget);
-					this.walkTo(this.currentTargetx, this.currentTargety);
-					
-//					delete this.onTargetReached;
-//					delete this.onTargetReachedArgs;
-//				}
+
+				delete this.currentPath;
+				
+				this.walkToRandomTarget();
+				this.currentTargetx = Math.random() * width;
+				this.currentTargety = Math.random() * worldHeight;
+
+				this.walkTo(this.currentTargetx, this.currentTargety);					
 			}
 		};
 	}
@@ -1921,8 +1787,7 @@ function Enemy(x, y, imgName) {
 		
 		this.currentPathLength = this.currentPath.length;
 		this.currentPathIndex = 0;
-//		this.onTargetReached = onTargetReached;
-//		this.onTargetReachedArgs = onTargetReachedArgs;
+
 	}
 	
 	this.walkToRandomTarget = function() {
@@ -1954,7 +1819,7 @@ function Enemy(x, y, imgName) {
 	}
 	
 	this.getRect = function() {
-		//TODO not create new object!
+		//TODO not instantiate
 		return new Rect(this.x, this.y, this.image.width, this.image.height);
 	};
 }
@@ -1999,7 +1864,7 @@ function Npc(name, x, y, image) {
 	}
 }
 
-//FIXME remove
+//TODO remove
 var temp = true;
 
 function Speechbubble(speakerx, speakery, text, timeout) {
@@ -2012,7 +1877,7 @@ function Speechbubble(speakerx, speakery, text, timeout) {
 	
 	var view;
 	
-	//FIXME quick fix, remove!
+	//TODO remove
 	var run = true;
 	
 	this.show = function() {
@@ -2021,10 +1886,8 @@ function Speechbubble(speakerx, speakery, text, timeout) {
 			temp = false;
 			this.view = $("<p class='speechbubble'>" + text + "</p>");
 			
-			//FIXME
-//			this.y = this.y + this.view.css("height");
-			this.y = this.y - 16 - 35; //TODO 16 is height of the bubble, and 35 ?
-			console.log("this.y:" + this.y);
+			this.y = this.y - 16 - 35; //TODO dynamically
+			//console.log("this.y:" + this.y);
 			this.view.css("left", this.x + "px").css("top", this.y + "px");
 			$("body").append(this.view);
 		}
@@ -2087,11 +1950,11 @@ function Bullet(x, y, power, vel, path) {
 	this.y = y;
 	this.power = power;
 	this.vel = vel;
-	//TODO implement as stack or more suitable data structure//////////
+
 	this.currentPath = path;
 	this.currentPathLength = this.currentPath.length;
 	this.currentPathIndex = 0;
-	///////////////////////////////////////////////////////////////////
+
 	this.image = new Image();
 	this.image.src = IMG_DIR + "bullet.png";
 	
@@ -2102,13 +1965,13 @@ function Bullet(x, y, power, vel, path) {
 	this.move = function() {
 		if (this.currentPath) {
 			if (this.currentPathIndex < this.currentPathLength) {
-//				console.log("and we are not finished with it: currentPathIndex:" + this.currentPathIndex + " currentPathlength:" + this.currentPathLength);
+
 				var pointToMove = this.currentPath[this.currentPathIndex];
 				this.x = pointToMove.x;
 				this.y = pointToMove.y;
 				this.currentPathIndex++;
 				
-				//TODO better algorithm
+
 				for (var i in enemies) {
 					if (isInSquare(this.x, this.y, enemies[i].getRect())) {
 						enemies[i].takeHit(this.power);
@@ -2118,10 +1981,7 @@ function Bullet(x, y, power, vel, path) {
 				}
 				
 			} else {
-//				if (this.onTargetReached) {
-//					console.log("calling onTargetReached:" + this.onTargetReached);
-					//FIXME refactor with Player
-					this.remove();
+				this.remove();
 			}
 		};
 	}
@@ -2140,7 +2000,7 @@ function Bullet(x, y, power, vel, path) {
 var npcStates = [];
 
 //function initNpcs() {
-//	//TODO init at game startup or at tile change?
+
 //	npcStates["seller"] = [];
 //	npcStates["seller"].push([
 //	                          
@@ -2152,7 +2012,7 @@ var npcStates = [];
 //	new State(1, [new Speech("Ok, bye", 0)], 
 //		null, null),
 //	
-//	//TODO execute action for want to buy and want to sell
+//	//TODO action for want to buy and want to sell
 //	//TODO split in 2 states, look in second state "do you need something?"
 //	new State(2, [new Speech("I'm a trader, do you need something?", 2)], 
 //        [new Answer("I want to buy", [new StateId("seller", 3)]), new Answer("I want to sell", [new StateId("seller", 1)]), new Answer("Not now, bye", [new StateId("seller", 1)])], 
@@ -2197,7 +2057,6 @@ function Answer(text, stateId, requiredItems, questUpdate) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //clothes
-//TODO integrate
 
 var dragElement;
 
@@ -2211,7 +2070,6 @@ function initClothes() {
 	 $('#clothes_selection img').bind('dragover', function (e) {
 		    e.originalEvent.preventDefault();
 		    
-		    //TODO replace with type system
 		    if (dragElement.id.indexOf(this.id) !== -1) {
 		    	$(this).css("background-color", "#CCFFCC");
 		    } else {
@@ -2238,7 +2096,6 @@ function initClothes() {
 		    	var newImg = $("<img src='" + this.src + "'></img>");
 		    	newImg.css("position", "absolute");
 		    	
-		    	//TODO
 		    	if (this.id === "helmet") {
 		    		newImg.css("top", 13).css("left", 74);
 		    	} else if (this.id === "body") {
@@ -2254,7 +2111,7 @@ function initClothes() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//talking cube TODO remove
+//talking cube
 var talkingCubes = [];
 var cubeIndex = 0;
 
@@ -2329,8 +2186,6 @@ function addVideo(x, y) {
 		snd.play();
 	}, false);
 	
-	//there should be class interactive or sth which button and fruit (item) inherits from
-	//+ states?
 	fruits.push(new Fruit("button", 400, 400, "button.png", 50, fruits.length, {
 		"unpressed" : new ItemState(IMG_DIR + "button.png", function() {
 			$("#video").attr("src", "img/small/niancat.png");
@@ -2354,13 +2209,13 @@ function initTiles2() {
 	var tilesy = height / tileHH;
 	
 	for (var yi = 0; yi < tilesy; yi++) {
-//	for (var y = -tileHH; y < height; y += tileHH) {
+
 		var y = yi * tileHH - tileHH;
 		tiles2[yi] = [];
 		for (var x = -tileWH * (yi % 2); x < width; x += TILE_W) {
-			console.log("###pushing x:" +x + "y");
+			//console.log("###pushing x:" +x + "y");
 			tiles2[yi].push({x:x, y:y, color:'#'+ Math.floor(Math.random()*16777215).toString(16)});
-//			drawTile(TILE_W, TILE_H, x, y);
+
 		}
 	}
 }
