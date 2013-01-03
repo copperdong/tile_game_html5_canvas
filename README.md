@@ -13,9 +13,7 @@ This is an unfinished exercise, meant to be taken "as is". Modify and use wheree
 
 [Test it](http://ivanschuetz.com/game/)
 
-Don't remember in which browser there are problems, if you see problems, try with another browser :D
-
-Recent version of Chrome (mine 23.0) works for sure. Firefox doesn't display the CSS3 boxes.
+Works in a recent version of Chrome (mine 23.0). Firefox doesn't display the CSS3 boxes. The rest, no idea.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
