@@ -15,7 +15,7 @@ This is an unfinished exercise, meant to be taken "as is". Modify and use wheree
 
 Don't remember in which browser there are problems, if you see problems, try with another browser :D
 
-
+Recent version of Chrome (mine 23.0) works for sure. Firefox doesn't display the CSS3 boxes.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
