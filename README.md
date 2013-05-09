@@ -7,7 +7,7 @@ Tiled rpg sample using Javascript and HTML5, learning exercise.
 ![ScreenShot](https://raw.github.com/i-schuetz/tile_game_html5_canvas/master/game_img.jpg)
 
 
-Works in a recent version of Chrome (mine 23.0). Firefox doesn't display the CSS3 boxes. The rest, no idea.
+Works in a recent version of Chrome (mine 23.0). Firefox doesn't display the CSS3 boxes (cube overlays). The rest, no idea :)
 
 
 [Test it](http://ivanschuetz.com/game/)
